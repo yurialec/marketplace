@@ -25,9 +25,17 @@ class SideBarController extends Controller
             'icone' => 'fa-solid fa-users',
         ];
 
+        $sair = [
+            'nome' => 'sair',
+            'label' => 'Sair',
+            'url' => route('admin.logout'),
+            'icone' => 'fa fa-sign-out',
+        ];
+
         return [
             $dashboard,
             $usuarios,
+            $sair,
         ];
     }
 
