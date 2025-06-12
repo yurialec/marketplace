@@ -8,6 +8,17 @@ import axios from 'axios';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+let token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.warn('CSRF token não encontrado. Verifique se a meta tag está presente no layout.');
+}
+
+window.axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || '/';
+window.axios.defaults.timeout = 10000;
+window.axios.defaults.headers.common['Accept'] = 'application/json';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

@@ -1,4 +1,4 @@
 @extends('admin.layouts.app_admin')
 @section('content')
-    <dashboard></dashboard>
+    <usuarios-index></usuarios-index>
 @endsection

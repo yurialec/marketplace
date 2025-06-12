@@ -1,23 +1,25 @@
 import './bootstrap';
 import '../css/app.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import { createApp, defineAsyncComponent } from 'vue';
+import WidgetPlugin from './plugins/widget';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const app = createApp({});
 
-createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-    setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(ZiggyVue)
-            .mount(el);
-    },
-    progress: {
-        color: '#4B5563',
-    },
+app.use(WidgetPlugin);
+
+const components = import.meta.glob('./Components/**/*.vue');
+for (const [path, definition] of Object.entries(components)) {
+    const name = path.split('/').pop().replace(/\.\w+$/, '');
+    app.component(name, defineAsyncComponent(definition));
+}
+
+app.mount('#app');
+
+document.getElementById('sidebarToggle')?.addEventListener('click', () => {
+    document.body.classList.toggle('sb-sidenav-toggled');
 });
