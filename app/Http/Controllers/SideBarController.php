@@ -21,7 +21,7 @@ class SideBarController extends Controller
         $usuarios = [
             'nome' => 'usuarios',
             'label' => 'Usuários',
-            'url' => '#',
+            'url' => route('admin.usuarios.index'),
             'icone' => 'fa-solid fa-users',
         ];
 

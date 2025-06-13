@@ -32,6 +32,7 @@ export default {
                     this.items = response.data;
                 })
                 .catch(errors => {
+                    window.alert(errors);
                 })
                 .finally(() => {
                 });
