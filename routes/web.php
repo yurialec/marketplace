@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\SideBarController;
 use App\Http\Controllers\Admin\UsuariosController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Clientes\ClienteController;
+use App\Http\Controllers\Clientes\PainelClienteController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +40,9 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
 });
 
 Route::prefix('conta')->middleware(['auth'])->group(function () {
-    Route::get('/painel', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/', [PainelClienteController::class, 'index'])->name('cliente.painel.index');
+    Route::get('/pedidos', [PainelClienteController::class, 'pedidos'])->name('cliente.painel.pedidos');
+    Route::get('/perfil', [PainelClienteController::class, 'perfil'])->name('cliente.painel.perfil');
 });
 
 // Route::get('/', function () {
