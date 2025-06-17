@@ -5,8 +5,9 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
-        <div class="navbar-collapse d-lg-flex justify-content-between align-items-center w-100" id="navbarSupportedContent">
+
+        <div class="navbar-collapse d-lg-flex justify-content-between align-items-center w-100"
+            id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <!-- <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li> -->
                 <!-- <li class="nav-item"><a class="nav-link" href="#!">About</a></li> -->
@@ -30,10 +31,10 @@
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                 </button>
                 @if (!Request::is('login'))
-                <a href="{{ route('showLoginForm') }}" class="btn btn-outline-dark">
-                    <i class="bi-person-fill me-1"></i>
-                    Login
-                </a>
+                    <a href="{{ route('showLoginForm') }}" class="btn btn-outline-dark">
+                        <i class="bi-person-fill me-1"></i>
+                        Login
+                    </a>
                 @endif
             </div>
         </div>
@@ -41,7 +42,8 @@
 </nav>
 
 @if (!Request::is('login'))
-    <header class="bg-dark py-5">
+    <header class="bg-dark py-5"
+        style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/img/arrangement.jpg'); background-size: cover; background-position: center;">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Shop in style</h1>
@@ -49,4 +51,66 @@
             </div>
         </div>
     </header>
+
+    <div class="banners-commercial bg-light py-4" id="banners-commercial-14028098">
+        <div class="container">
+            <div class="row g-3 banner-cards-78092816">
+                <!-- Frete Grátis -->
+                <div class="col-6 col-lg-2 text-center">
+                    <a class="d-flex flex-column align-items-center justify-content-center h-100 text-decoration-none text-dark"
+                        href="https://www.studiogeek.com.br/frete-e-entrega">
+                        <i class="bi bi-truck fs-1 mb-2"></i>
+                        <h3 class="h5 fw-bold mb-1">FRETE GRÁTIS*</h3>
+                        <p class="small m-0 text-muted">Consulte as condições</p>
+                    </a>
+                </div>
+
+                <!-- Desconto à Vista -->
+                <div class="col-6 col-lg-2 text-center">
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                        <i class="bi bi-currency-dollar fs-1 mb-2"></i>
+                        <h3 class="h5 fw-bold mb-1">DESCONTO À VISTA</h3>
+                        <p class="small m-0 text-muted">3% off no Pix ou Boleto</p>
+                    </div>
+                </div>
+
+                <!-- Parcele no Cartão -->
+                <div class="col-6 col-lg-2 text-center">
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                        <i class="bi bi-credit-card fs-1 mb-2"></i>
+                        <h3 class="h5 fw-bold mb-1">PARCELE NO CARTÃO</h3>
+                        <p class="small m-0 text-muted">Até 5x sem juros*</p>
+                    </div>
+                </div>
+
+                <!-- Cashback -->
+                <div class="col-6 col-lg-2 text-center">
+                    <a class="d-flex flex-column align-items-center justify-content-center h-100 text-decoration-none text-dark"
+                        href="https://www.studiogeek.com.br/cashback-studio-geek">
+                        <i class="bi bi-cash-coin fs-1 mb-2"></i>
+                        <h3 class="h5 fw-bold mb-1">CASHBACK</h3>
+                        <p class="small m-0 text-muted">Compre e ganhe</p>
+                    </a>
+                </div>
+
+                <!-- Tamanhos Grandes -->
+                <div class="col-6 col-lg-2 text-center">
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                        <i class="bi bi-tshirt fs-1 mb-2"></i>
+                        <h3 class="h5 fw-bold mb-1">TAMANHOS GRANDES</h3>
+                        <p class="small m-0 text-muted">Até o 4G</p>
+                    </div>
+                </div>
+
+                <!-- 1ª Troca Grátis -->
+                <div class="col-6 col-lg-2 text-center">
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                        <i class="bi bi-arrow-left-right fs-1 mb-2"></i>
+                        <h3 class="h5 fw-bold mb-1">1ª TROCA GRÁTIS</h3>
+                        <p class="small m-0 text-muted">Solicite dentro de 10 dias</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endif

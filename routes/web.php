@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SideBarController;
+use App\Http\Controllers\Admin\UsuariosController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\SideBarController;
+use App\Http\Controllers\Clientes\ClienteController;
 use App\Http\Controllers\SiteController;
-use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,10 +28,18 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/sidebar', [SideBarController::class, 'index'])->name('admin.sidebar');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
-    
+
     Route::prefix('usuarios')->group(function () {
         Route::get('/', [UsuariosController::class, 'index'])->name('admin.usuarios.index');
     });
+
+    Route::prefix('clientes')->group(function () {
+        Route::get('/', [ClienteController::class, 'index'])->name('admin.clients.index');
+    });
+});
+
+Route::prefix('conta')->middleware(['auth'])->group(function () {
+    Route::get('/painel', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 });
 
 // Route::get('/', function () {

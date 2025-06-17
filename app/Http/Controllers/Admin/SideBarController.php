@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class SideBarController extends Controller
@@ -19,10 +20,26 @@ class SideBarController extends Controller
         ];
 
         $usuarios = [
-            'nome' => 'usuarios',
-            'label' => 'Usuários',
-            'url' => route('admin.usuarios.index'),
-            'icone' => 'fa-solid fa-users',
+            [
+                'nome' => 'usuarios',
+                'label' => 'Usuários',
+                'url' => '#',
+                'icone' => 'fa-solid fa-users',
+                'filhos' => [
+                    [
+                        'nome' => 'usuarios-admin',
+                        'label' => 'Usuários Admin',
+                        'url' => route('admin.usuarios.index'),
+                        'icone' => '',
+                    ],
+                    [
+                        'nome' => 'clientes',
+                        'label' => 'Clientes',
+                        'url' => route('admin.clients.index'),
+                        'icone' => '',
+                    ]
+                ]
+            ]
         ];
 
         $sair = [
@@ -34,7 +51,7 @@ class SideBarController extends Controller
 
         return [
             $dashboard,
-            $usuarios,
+            ...$usuarios,
             $sair,
         ];
     }
