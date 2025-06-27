@@ -38,16 +38,18 @@
 <body id="app" class="sb-nav-fixed">
     @include('admin.layouts.navbar')
     <div id="layoutSidenav">
-        @include('admin.layouts.sidebar')
+        <div id="layoutSidenav_nav">
+            @include('admin.layouts.sidebar')
+        </div>
         <div id="layoutSidenav_content">
             <main class="p-0">
                 <div class="container-fluid px-4 mt-4">
                     @yield('content')
                 </div>
             </main>
+            @include('admin.layouts.footer')
         </div>
     </div>
-    @include('admin.layouts.footer')
     @stack('scripts')
 </body>
 

@@ -28,7 +28,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-sm table-hover align-middle">
-                    <thead class="table-light">
+                    <thead>
                         <tr>
                             <th>#</th>
                             <th>First</th>
