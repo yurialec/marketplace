@@ -39,10 +39,7 @@
             @yield('content')
         </div>
     </main>
-
     @include('clientes.layouts.footer')
-
-    <!-- Scripts específicos, se necessário -->
     @stack('scripts')
 </body>
 
