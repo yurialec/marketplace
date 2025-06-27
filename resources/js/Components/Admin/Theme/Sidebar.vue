@@ -1,42 +1,79 @@
 <template>
-    <nav class="sb-sidenav accordion sb-sidenav-light mt-3" id="sidenavAccordion">
-        <div class="sb-sidenav-menu">
-            <div class="nav">
-                <template v-for="(item, index) in items" :key="item.nome">
-                    <!-- Item sem filhos -->
-                    <a v-if="!item.filhos || item.filhos.length === 0" class="nav-link" :href="item.url">
-                        <div class="sb-nav-link-icon">
-                            <i :class="item.icone"></i>
-                        </div>
-                        {{ item.label }}
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-light mt-3" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Core</div>
+                    <a class="nav-link" href="index.html">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Dashboard
                     </a>
-
-                    <!-- Item com filhos com toggle -->
-                    <template v-else>
-                        <div class="nav-link" @click="toggleMenu(index)" style="cursor: pointer;">
-                            <div class="sb-nav-link-icon">
-                                <i :class="item.icone"></i>
+                    <div class="sb-sidenav-menu-heading">Interface</div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+                        aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Layouts
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                            <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+                        aria-expanded="false" aria-controls="collapsePages">
+                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                        Pages
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                        data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#pagesCollapseAuth" aria-expanded="false"
+                                aria-controls="pagesCollapseAuth">
+                                Authentication
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
+                                data-bs-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="login.html">Login</a>
+                                    <a class="nav-link" href="register.html">Register</a>
+                                    <a class="nav-link" href="password.html">Forgot Password</a>
+                                </nav>
                             </div>
-                            {{ item.label }}
-                            <div class="sb-sidenav-collapse-arrow float-end">
-                                <i :class="item.expandido ? 'fas fa-angle-up' : 'fas fa-angle-down'"></i>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#pagesCollapseError" aria-expanded="false"
+                                aria-controls="pagesCollapseError">
+                                Error
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
+                                data-bs-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="401.html">401 Page</a>
+                                    <a class="nav-link" href="404.html">404 Page</a>
+                                    <a class="nav-link" href="500.html">500 Page</a>
+                                </nav>
                             </div>
-                        </div>
-                        <transition name="slide">
-                            <nav v-show="item.expandido" class="sb-sidenav-menu-nested nav">
-                                <a v-for="filho in item.filhos" :key="filho.nome" class="nav-link" :href="filho.url">
-                                    <span v-if="filho.icone">
-                                        <i :class="filho.icone + ' me-2'"></i>
-                                    </span>
-                                    {{ filho.label }}
-                                </a>
-                            </nav>
-                        </transition>
-                    </template>
-                </template>
+                        </nav>
+                    </div>
+                    <div class="sb-sidenav-menu-heading">Addons</div>
+                    <a class="nav-link" href="charts.html">
+                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                        Charts
+                    </a>
+                    <a class="nav-link" href="tables.html">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Tables
+                    </a>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
 </template>
 
 <script>
@@ -45,54 +82,12 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            items: [],
         };
     },
     mounted() {
-        this.getSidebar();
     },
     methods: {
-        async getSidebar() {
-            try {
-                const response = await axios.get('/admin/sidebar');
-                this.items = response.data.map(item => ({
-                    ...item,
-                    expandido: false,
-                }));
-            } catch (error) {
-                console.error('Erro ao carregar sidebar:', error);
-            }
-        },
-        toggleMenu(index) {
-            this.items[index].expandido = !this.items[index].expandido;
-        },
+
     },
 };
 </script>
-
-<style scoped>
-.sb-nav-link-icon {
-    display: inline-block;
-    margin-right: 0.5rem;
-}
-
-.sb-sidenav-menu-nested {
-    margin-left: 1.5rem;
-}
-
-.slide-enter-active,
-.slide-leave-active {
-    transition: max-height 0.5s ease;
-    overflow: hidden;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-    max-height: 0;
-}
-
-.slide-enter-to,
-.slide-leave-from {
-    max-height: 500px;
-}
-</style>

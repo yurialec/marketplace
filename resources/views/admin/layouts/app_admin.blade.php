@@ -20,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <!-- Carrega CSS via Vite -->
-    @vite(['resources/js/app.js', 'resources/css/app_admin.css'])
+    @vite(['resources/js/app.js', 'resources/sass/app_admin.scss'])
 
     <!-- Meta Tags para SEO -->
     <meta name="description" content="@yield('meta_description', 'Marketplace criado com Laravel para estudos.')">
@@ -37,10 +37,8 @@
 
 <body id="app" class="sb-nav-fixed">
     @include('admin.layouts.navbar')
-    <div id="layoutSidenav" class="bg-light">
-        <div id="layoutSidenav_nav">
-            @include('admin.layouts.sidebar')
-        </div>
+    <div id="layoutSidenav">
+        @include('admin.layouts.sidebar')
         <div id="layoutSidenav_content">
             <main class="p-0">
                 <div class="container-fluid px-4 mt-4">

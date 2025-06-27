@@ -4,7 +4,12 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import axios from 'axios';
+
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
