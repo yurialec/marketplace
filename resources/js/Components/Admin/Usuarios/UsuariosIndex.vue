@@ -7,8 +7,12 @@
                         <h5 class="mb-0">Usuários</h5>
                     </div>
                     <div class="col-12 col-md-6">
-                        <form>
-                            <input type="text" class="form-control form-control-sm" placeholder="Pesquisar usuários...">
+                        <form @submit.prevent="find()" class="input-group">
+                            <input v-model="termoBusca" type="text" class="form-control form-control-sm"
+                                placeholder="Pesquisar usuários...">
+                            <button class="btn btn-outline-primary btn-sm" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
                         </form>
                     </div>
                     <div class="col-12 col-md-3 text-md-end text-center">
@@ -30,65 +34,26 @@
                 <table class="table table-sm table-hover align-middle">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>First</th>
-                            <th>Last</th>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Criado</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
+                        <tr v-for="usuario in usuarios.data" :key="usuario.id">
+                            <td>{{ usuario.name }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td>{{ formatarData(usuario.created_at) }}</td>
                             <td class="text-center">
-                                <div class="d-flex flex-column flex-md-row justify-content-center gap-1">
-                                    <button class="btn btn-link btn-sm text-dark" title="Visualizar">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                    <button class="btn btn-link btn-sm text-warning" title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-link btn-sm text-danger" title="Excluir">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td class="text-center">
-                                <div class="d-flex flex-column flex-md-row justify-content-center gap-1">
-                                    <button class="btn btn-link btn-sm text-dark" title="Visualizar">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                    <button class="btn btn-link btn-sm text-warning" title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-link btn-sm text-danger" title="Excluir">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>Larry the Bird</td>
-                            <td>@twitter</td>
-                            <td class="text-center">
-                                <div class="d-flex flex-column flex-md-row justify-content-center gap-1">
-                                    <button class="btn btn-link btn-sm text-dark" title="Visualizar">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                    <button class="btn btn-link btn-sm text-warning" title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-link btn-sm text-danger" title="Excluir">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
+                                <button class="btn btn-sm btn-link text-warning me-2" title="Editar usuário"
+                                    @click="editarUsuario(usuario)">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-sm btn-link text-danger" title="Excluir usuário"
+                                    @click="excluirUsuario(usuario)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -99,16 +64,12 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-auto">
-                        <nav aria-label="Paginação">
-                            <ul class="pagination pagination-sm justify-content-center mb-0">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Próximo</a>
+                        <nav>
+                            <ul class="pagination">
+                                <li v-for="(link, index) in usuarios.links" :key="index"
+                                    :class="['page-item', { active: link.active, disabled: !link.url }]">
+                                    <a class="page-link" href="#" v-html="link.label"
+                                        @click.prevent="pagination(link.url)"></a>
                                 </li>
                             </ul>
                         </nav>
@@ -120,19 +81,60 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    name: 'UsuariosIndex', // Nome do componente
+    name: 'UsuariosIndex',
     data() {
         return {
-            // Seus dados reativos
+            loading: false,
+            usuarios: {
+                data: [],
+                links: []
+            },
+            termoBusca: ''
         };
     },
     mounted() {
-        console.log('componente usuarios');
-
+        this.find();
     },
     methods: {
-        // Seus métodos
+        find(url = '/admin/usuarios/listar') {
+            this.loading = true;
+            axios.get(url, { params: { search: this.termoBusca } })
+                .then((response) => {
+                    this.usuarios = response.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+        pagination(url) {
+            if (url) {
+                this.find(url);
+            }
+        },
+        formatarData(data) {
+            const d = new Date(data);
+            return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR');
+        },
+        editarUsuario(usuario) {
+            window.location.href = `/admin/usuarios/${usuario.id}/editar`;
+        },
+        excluirUsuario(usuario) {
+            if (confirm(`Deseja realmente excluir o usuário "${usuario.name}"?`)) {
+                axios.delete(`/admin/usuarios/${usuario.id}`)
+                    .then(() => {
+                        this.find();
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao excluir usuário:', error);
+                    });
+            }
+        }
     }
 };
 </script>

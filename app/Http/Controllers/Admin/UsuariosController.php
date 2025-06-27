@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Log;
 
 class UsuariosController extends Controller
 {
@@ -13,6 +16,26 @@ class UsuariosController extends Controller
     public function index()
     {
         return view('admin.usuarios.index');
+    }
+
+    public function listar(Request $request)
+    {
+        try {
+            $query = User::where('is_admin', true);
+
+            if ($request->has('search')) {
+                $search = $request->input('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%$search%")
+                        ->orWhere('email', 'like', "%$search%");
+                });
+            }
+
+            return $query->paginate(10);
+        } catch (Exception $err) {
+            Log::error($err->getMessage());
+            return response()->json(['error' => $err->getMessage()], 500);
+        }
     }
 
     /**
@@ -44,7 +67,7 @@ class UsuariosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return 'editar ' . $id;
     }
 
     /**
@@ -60,6 +83,6 @@ class UsuariosController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        logger('excluir ' . $id);
     }
 }

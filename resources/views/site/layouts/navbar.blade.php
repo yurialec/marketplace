@@ -43,7 +43,7 @@
 
 @if (!Request::is('login'))
     <header class="bg-dark py-5"
-        style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/img/arrangement.jpg'); background-size: cover; background-position: center;">
+        style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/img/tela-widescreen.jpg'); background-size: cover; background-position: center;">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Shop in style</h1>

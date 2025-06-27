@@ -30,8 +30,11 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/sidebar', [SideBarController::class, 'index'])->name('admin.sidebar');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-    Route::prefix('usuarios')->group(function () {
+    Route::prefix('/usuarios')->group(function () {
         Route::get('/', [UsuariosController::class, 'index'])->name('admin.usuarios.index');
+        Route::get('/listar', [UsuariosController::class, 'listar'])->name('admin.usuarios.listar');
+        Route::get('/{id}/editar', [UsuariosController::class, 'edit'])->name('admin.usuarios.edit');
+        Route::delete('/{id}', [UsuariosController::class, 'destroy'])->name('admin.usuarios.destroy');
     });
 
     Route::prefix('clientes')->group(function () {
